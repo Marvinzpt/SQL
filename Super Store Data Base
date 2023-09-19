@@ -1,0 +1,19 @@
+#Use a SELECT statement to order the items by price.
+select item_name,price
+from superstore 
+order by price desc;
+
+#Show a statistic about the item prices.
+select avg(price)
+from superstore;
+
+#Show a statistic about the price for items in the category of "Kitchen Supplies".
+select Avg (price)
+from superstore
+where category= 'Kitchen Supplies';
+
+#Show the  ammount left  in the item of "Air Purifier"
+select item_name,stock_quantity
+from superstore
+where item_name='Air Purifier';
+
