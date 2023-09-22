@@ -59,7 +59,10 @@ VALUES
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
 
-# Analysis:  Assign all the companies in the Technology Industry  As 'Unsatisfactory'
+# Analysis:  
+
+
+Assign all the companies in the Technology Industry  As 'Unsatisfactory','Acceptable', or 'Aprovable
 
 select Company_name,
 Case 
@@ -69,6 +72,35 @@ Else 'Aprovable'
 ENd As Vacation
 From Fortune_Companies 
 where Industry='Technology'
+;
+
+Which compannies have a total  of at least 100 Thousand of Employees?
+select company_name, sum(employees) as  sum_employees
+from fortune_companies
+group by company_name
+having sum_employees>=100
+;
+
+Which companies have healthcare benefits *and* at least 15 paid time off days?
+
+select company_name
+from fortune_companies
+where healthcare_benefits=1
+and paid_time_off_days>15
+;
+
+ Which company in the Retail industry has the least revenue, and what's their revenue? 
+SELECT company_name, min(revenue)
+From fortune_companies
+where industry='Retail'
+;
+
+
+
+
+
+
+
 
 
 
