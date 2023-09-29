@@ -14,7 +14,7 @@ and Length(orderid)=6
 and orderid <> "Order ID";
 
 #3. Select the customer account numbers for all the orders that were placed in February. 
-select distinct (cus.acctnum )
+select  (cus.acctnum )
 from customers as cus
 Inner  Join FebSales as Feb
 on cus.order_id=Feb.orderid
@@ -51,6 +51,15 @@ on Cus.order_id=Feb.orderid
 where quantity>2
 and length(orderid)=6
 and orderid<>"Order ID";
+
+#8. List all the products sold in Los Angeles in February, and include how many of each were sold. 
+Select Distinct Product,sum(quantity) as total_sold
+From  FebSales
+where Location like "%Los Angeles%"
+group by product;
+
+
+
 
 
 
