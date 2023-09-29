@@ -1,46 +1,56 @@
-select *
-from JanSales
-limit 5;
+#In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data. 
 
+#1. How many orders were placed in January? 
 Select  count(orderid) as orders
 from JanSales
-where  length(orderid)=6;
+where  length(orderid)=6
+AND orderid <> 'Order ID';
 
+#2. How many of those orders were for an iPhone? 
 Select count(orderid) as iPhone_Orders
 from JanSales
 where  Product= "iPhone"
 and Length(orderid)=6
 and orderid <> "Order ID";
 
-select distinct cus.acctnum 
+#3. Select the customer account numbers for all the orders that were placed in February. 
+select distinct (cus.acctnum )
 from customers as cus
 Inner  Join FebSales as Feb
 on cus.order_id=Feb.orderid
 where length(orderid)=6
-and orderid<>("order ID")
-order by Feb.Price asc;
+and orderid<>("order ID");
 
+#4. Which product was the cheapest one sold in January, and what was the price? 
 select  distinct product,Min(price)
 from JanSales
 group by product 
 order by price asc 
 limit 1;
 
-select sum(quantity)*price as Revenue, product 
+#5. What is the total revenue for each product sold in January?
+
+select Product, sum(quantity)*price as Revenue
 from JanSales
 group by product;
 
 
+#6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
+
 select sum(quantity) as Quantity, sum(quantity)*price as Revenue, product
 from FebSales
-where location= "548 Lincoln St, Seattle, WA 98101";
+where location= "548 Lincoln St, Seattle, WA 98101"
+Group by Product;
 
-Select count(cus.acctnum) as Customers ,avg(Feb.quantity*price) as Avg_Spent ,Feb.product 
+#7. How many customers ordered more than 2 products at a time, and what was the average amount spent for those customers? 
+select 
+Select count(cus.acctnum) as Customers ,avg(Feb.quantity*price) as Avg_Spent ,Feb.product  AS Products
 from customers as Cus
 Left Join FebSales as Feb
 on Cus.order_id=Feb.orderid
 where quantity>2
 and length(orderid)=6
+and orderid<>"Order ID";
 
 
 
