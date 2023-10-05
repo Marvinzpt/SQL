@@ -1,0 +1,32 @@
+Show Customers (their full names, customer ID, and country) who are not in the US.
+
+#1.
+Select Firstname,Lastname,customerid,country
+from customers
+where country<> "USA";
+
+#2.
+Show only the Customers from Brazil.
+Select *
+from customers
+where country="Brazil";
+
+#3.
+Select Inv.InvoiceId, cus.Firstname,cus.Lastname,Inv.InvoiceDate,Inv.BillingCountry
+from customers as cus
+Left Join invoices as Inv
+on cus.CustomerId=Inv.CustomerId
+where Inv.Billingcountry="Brazil";
+
+#4.
+Select *
+from employees
+where title like "%agent";
+
+#5.
+Select  distinct billingcountry
+from invoices;
+
+#6.
+
+
