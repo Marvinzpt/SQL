@@ -43,5 +43,8 @@ on cus.customerid=inv.customerid
 join employees as emp
 on emp.EmployeeId=cus.SupportRepId;
 
-#8.
+#8. How many Invoices were there in 2009?
+Select Count(InvoiceId)
+from invoices
+where InvoiceDate  between "2009-01-01" and "2009-12-31";
 
