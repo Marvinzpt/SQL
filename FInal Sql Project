@@ -1,32 +1,47 @@
-Show Customers (their full names, customer ID, and country) who are not in the US.
 
-#1.
+
+#1.Show Customers (their full names, customer ID, and country) who are not in the US. 
 Select Firstname,Lastname,customerid,country
 from customers
 where country<> "USA";
 
-#2.
+#2.Show only the Customers from Brazil.
 Show only the Customers from Brazil.
 Select *
 from customers
 where country="Brazil";
 
-#3.
+#3.Find the Invoices of customers who are from Brazil. The resulting table should show the customer's full name, Invoice ID, Date of the invoice, and billing country.
 Select Inv.InvoiceId, cus.Firstname,cus.Lastname,Inv.InvoiceDate,Inv.BillingCountry
 from customers as cus
 Left Join invoices as Inv
 on cus.CustomerId=Inv.CustomerId
 where Inv.Billingcountry="Brazil";
 
-#4.
+#4 .Show the Employees who are Sales Agents.
 Select *
 from employees
 where title like "%agent";
 
-#5.
+#5 .Find a unique/distinct list of billing countries from the Invoice table.
 Select  distinct billingcountry
 from invoices;
 
-#6.
+#6. Provide a query that shows the invoices associated with each sales agent. The resulting table should include the Sales Agent's full name.
+Select em.Lastname,em.Firstname,inv.InvoiceId
+from employees as em
+Left Join customers as cus
+on em.EmployeeId=cus.supportrepid
+join invoices as inv
+on inv.customerId=cus.customerId;
 
+#7.Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
+Select inv.total,cus.Firstname,cus.Lastname,emp.FirstName,emp.LastName,cus.country
+from customers as cus
+Left Join invoices as inv
+on cus.customerid=inv.customerid
+join employees as emp
+on emp.EmployeeId=cus.SupportRepId;
+
+#8.
 
