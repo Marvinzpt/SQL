@@ -48,3 +48,9 @@ Select Count(InvoiceId)
 from invoices
 where InvoiceDate  between "2009-01-01" and "2009-12-31";
 
+#9.What are the total sales for 2009?
+Select sum(total)
+from invoices
+where InvoiceDate  between "2009-01-01" and "2009-12-31";
+
+
