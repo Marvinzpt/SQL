@@ -87,7 +87,29 @@ on Gen.GenreId=tr.GenreId
 Left Join media_types as Med
 on Med.MediaTypeID=tr.MediaTypeID;
 
-#13.
- 
+#13. Show the total sales made by each sales agent.
+ SELECT emp.FirstName, emp.LastName,
+ROUND(SUM(Inv.Total), 2) as 'Total Sales' 
+FROM chinook.Employees emp
 
+JOIN chinook.Customers cust 
+ON cust.SupportRepId = emp.EmployeeId
 
+JOIN chinook.Invoices Inv 
+ON Inv.CustomerId = cust.CustomerId
+
+WHERE emp.Title = 'Sales Support Agent' 
+GROUP BY emp.FirstName;
+
+#14. Which sales agent made the most dollars in sales in 2009?
+Select em.Firstname,em.Lastname,round(sum(inv.Total),2) as Total_Sales
+from employees as em
+Left Join  customers as cus
+on em.EmployeeId=cus.SupportrepId
+Join invoices as inv
+on inv.customerid=cus.customerId
+where inv.Invoicedate between "2009-01-01" and "2009-12-31"
+and em.Title= "Sales Support Agent"
+group by em.Firstname
+order by total_sales desc
+limit 1;
