@@ -28,6 +28,7 @@ Select  distinct billingcountry
 from invoices;
 
 #6. Provide a query that shows the invoices associated with each sales agent. The resulting table should include the Sales Agent's full name.
+
 Select em.Lastname,em.Firstname,inv.InvoiceId
 from employees as em
 Left Join customers as cus
@@ -36,6 +37,7 @@ join invoices as inv
 on inv.customerId=cus.customerId;
 
 #7.Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
+
 Select inv.total,cus.Firstname,cus.Lastname,emp.FirstName,emp.LastName,cus.country
 from customers as cus
 Left Join invoices as inv
@@ -44,13 +46,48 @@ join employees as emp
 on emp.EmployeeId=cus.SupportRepId;
 
 #8. How many Invoices were there in 2009?
+
 Select Count(InvoiceId)
 from invoices
 where InvoiceDate  between "2009-01-01" and "2009-12-31";
 
 #9.What are the total sales for 2009?
+
 Select sum(total)
 from invoices
 where InvoiceDate  between "2009-01-01" and "2009-12-31";
+
+#10.Write a query that includes the purchased track name with each invoice line ID.
+
+SELECT t.Name, i.InvoiceLineId
+FROM chinook.Invoice_items i
+JOIN chinook.Tracks t 
+ON i.TrackId = t.TrackId;
+
+
+#11.Write a query that includes the purchased track name AND artist name with each invoice line ID.
+
+Select t.name as song,ar.name as Artist,i.InvoiceLineID
+from tracks as t
+Left Join invoice_items as i
+on t.Trackid=i.Trackid
+Inner join albums as a
+ on a.AlbumID=t.albumId
+ Left  Join Artists as Ar
+ on ar.ArtistID=a.ArtistId;
+
+#12 Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
+
+Select tr.name as Trackname ,al.Title as Album,Gen.Name as Genre,Med.Name as MediaName
+from tracks as tr
+Left Join albums as al
+on tr.AlbumID=al.AlbumID
+Left Join Genres as Gen
+on Gen.GenreId=tr.GenreId
+Left Join media_types as Med
+on Med.MediaTypeID=tr.MediaTypeID;
+
+#13.
+ 
 
 
