@@ -28,7 +28,8 @@ time_signature integer NOT NULL
 
 Select track_name, min(song_key) as "Lowest Song Key"
 from Spotifydata
-order by  "Lowest Song Key";
+order by  "Lowest Song Key"
+limit 1;
 
 #2  What are the top 10 tracks that have an average Popularity of more than 85, show the artist name as well?
 Select  artist_name,track_name ,avg(popularity) as avg_popularity
@@ -38,6 +39,12 @@ group by artist_name
 order by avg_popularity desc
 limit 10;
 
-#3 
+#3 how many tracks does Olivia Rodrigos  have in this dataset?
+
+Select artist_name,count (artist_name)as  track_count
+from Spotifydata
+where artist_name= "Olivia Rodrigo"
+order by track_count ;
+
 
 
