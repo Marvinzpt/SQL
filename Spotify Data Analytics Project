@@ -46,5 +46,14 @@ from Spotifydata
 where artist_name= "Olivia Rodrigo"
 order by track_count ;
 
+Calculate the average popularity for the artists in the Spotify data table. 
+Then, for every artist with an average popularity of 90 or above,how their name, their average popularity, and label them as a “Top Star”
 
+With Popularity_Cte as(
+Select artist_name,avg(popularity) as avg_popularity
+from Spotifydata
+group by artist_name )
 
+Select artist_name, avg_popularity ,"Top Star" as Tag
+from Popularity_Cte
+where avg_popularity>=90;
