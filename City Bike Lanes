@@ -1,9 +1,0 @@
-with avg_Safety_Rating_Cte as(
-Select street,avg(safetyrating) as avg_Safetyrating
-from CityBikeLanes
-group by street)
-
-Select street,avg_safetyrating, "Safe Lane" as Label
-from avg_Safety_Rating_Cte 
-where avg_Safetyrating>=4
-
