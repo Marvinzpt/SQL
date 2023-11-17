@@ -1,5 +1,5 @@
 
- FInd the MIn and MAx of each Country Life expenctancy and filter out the ones with zero.
+ 1. FInd the MIn and MAx of each Country Life expenctancy and filter out the ones with zero.
   SELECT country,
 MIN('Life expectancy'),
 MAX('Life expectancy')
@@ -7,9 +7,9 @@ FROM worldlifeexpectancy
 group by country
 having MIN('Life expectancy') !=0
 and MAX('Life expectancy')!= 0
-order by country desc
+order by country desc;
 
-2. FInd the country that made the biggest strive 
+2. FInd the country that made the biggest strive  lowest to gratest.
 
 SELECT country,
 round(MAX('Life expectancy')-MIN('Life expectancy'),1) as LIfe_Increase_15years
@@ -17,4 +17,64 @@ FROM worldlifeexpectancy
 group by country
 having MIN('Life expectancy') !=0
 and MAX('Life expectancy')!= 0
-order by country desc
+order by country asc;
+
+3. FInd the life Expectancy for Each Year and round by 2, and order by the smallest to biggest
+
+Select year,round(avg('Life expectancy'),2) as avg_life_expectancy
+from  worldlifeexpectancy
+where 'Life expectancy'!=0
+group by year 
+order by year;
+
+4. compare  the average 'Life expectancy' to the GDP  by country
+
+Select country,round(avg( 'Life expectancy'),1) as Avg_LIfe_Expectancy,
+round(avg(gdp),1) as avg_gdp
+from worldlifeexpectancy
+group by country 
+having Avg_LIfe_Expectancy>0
+and avg_gdp>0
+order by  avg_gdp asc;
+
+5.  FInd the high and low of how many country have 1500 less than or more 1500 Gdp
+select
+sum(case  WHen GDP>=1500 THen 1 Else 0 end ) High_GDP_Count,
+avg(Case when GDP>= 1500Then 'Life expectancy' ELse null end ) High_Gdp_count_Life expectancy
+sum(case  WHen GDP<=1500 THen 1 Else 0 end ) High_GDP_Count,
+avg(Case when GDP<= 1500Then 'Life expectancy' ELse null end ) low_Gdp_count_Life expectancy
+
+6. what are the avg Life experctancy of each status
+select status,Round(avg( 'Life expectancy'),1)
+from  worldlifeexpectancy
+group by status
+order by status asc;
+
+7. FInd how many country have developing and developed status
+select status ,count( distinct country)
+from  worldlifeexpectancy
+group by Status;
+
+8. DO a rolling TOtal of 'Adult Mortality' for  country that start with United, from year  oldest to modest 
+
+select country,year,'Life expectancy',
+'Adult Mortality',sum('Adult Mortality') over(partition by country order by year) as rolling_total
+where country like "%United%"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
