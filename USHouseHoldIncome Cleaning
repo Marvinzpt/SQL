@@ -1,0 +1,67 @@
+This project is rely on 
+two tables
+ -UsHouseHoldIncome
+ -UsHousHoldIncome_Stastistics
+
+
+
+1. FInd if their eany duplicates on both tables using ID column.
+
+Select id,count(id)
+ from   ushouseholdincome
+ group by id 
+ having COUNT(ID)>1;
+
+SELECT ID,COUNT(id)
+ from  ushouseholdincome_stastistics
+ group by id
+ having count(id)>1;
+ 
+2. I Did a row_number and put it in a subquery to delete the rows that have duplicates
+
+  Delete   from   ushouseholdincome
+ Where row_id IN(
+select row_id
+from (
+  Select row_id,
+ ID,
+ ROW_NUMBER() over( partition by id  order by id) as row_num
+ from  ushouseholdincome) duplicates
+ where row_num >1)
+
+3. Found out that some of the States where Misspelled
+
+Select distinct (state_name)
+ from    ushouseholdincome
+ order by 1;
+
+Update ushouseholdincome
+ Set State_name="Alabama"
+ Where State_name="alabama"
+
+ Update ushouseholdincome
+ Set State_name="Georgia"
+ Where State_name="georia"
+
+4. updated a blank by pupulated 
+
+Update   ushouseholdincome
+Set Place ="Autaugaville"
+Where County="Autauga County"
+and City= "Vinemont";
+
+5. Finding any mispelled values at type column so it could be rename 
+
+Select type,count(type)
+from   ushouseholdincome
+group by type;
+
+Update   ushouseholdincome
+Set Type ="Borough"
+Where Type="Boroughs"
+ 
+
+
+ 
+
+ 
