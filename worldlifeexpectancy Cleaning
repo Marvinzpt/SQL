@@ -49,4 +49,18 @@ on t1.country=t3.country
 and t1.year=t3.year+1
 where t1.'Life expectancy'=" "
 
+6. Updated so the blank from 'Life expectancy' could be populated
+
+Update  worldlifeexpectancy t1
+Join worldlifeexpectancy t2
+on t1.country=t2.country
+and t1.year=t2.year-1
+Join worldlifeexpectancy t3
+on t1.country=t3.country
+and t1.year=t3.year+1
+Set  t1.'Life expectancy'=round((t2.country +3.'Life expectancy')/2,1)
+ t1.'Life expectancy'=' '
+
+
+
 
