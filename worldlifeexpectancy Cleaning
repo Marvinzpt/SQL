@@ -1,1 +1,30 @@
-1. Looking for Duplicates
+1. first I Look for any Duplicates  This example I concat it so it will be country for each year, so it will be easier to find.
+
+Select country, year,concat(country,year),count(concat(country,year))
+from worldlifeexpectancy
+group by country, year,concat(country,year)
+having count(concat(country,year)) ;
+
+2. I USed a window Function to give a row number for  each row that has more than 1 duplicate and putting it on  a subquery to filter .
+
+select *
+from  (
+Select  row_id,
+row_number () over ( Partition by concat(country,year) order by concat(country,year)) as row_num
+from worldlifeexpectancy ) as  table_row
+where row_num >1
+
+3. I delete the duplicate  by using the Delete clasue .
+
+Delete  from   worldlifeexpectancy
+where 
+ row_ID IN (
+select row_id
+from  (
+Select  row_id,
+row_number () over ( Partition by concat(country,year) order by concat(country,year)) as row_num
+from worldlifeexpectancy ) as  table_row
+where row_num >1)
+
+4. I figured out some status  say
+
