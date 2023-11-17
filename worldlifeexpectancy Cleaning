@@ -26,5 +26,27 @@ row_number () over ( Partition by concat(country,year) order by concat(country,y
 from worldlifeexpectancy ) as  table_row
 where row_num >1)
 
-4. I figured out some status  say
+4. I figured out there where blanks on Life expectancy collumn 
+
+Select  country,YEar ,'Life expectancy'
+from  worldlifeexpectancy
+where 'Life expectancy'= ' '
+
+5. I Self Join to Populalize each blank from the Life expectancy collumn 
+from each year
+
+Select  t1.country,t1.YEar ,t1.'Life expectancy',
+t2.country,t2.YEar ,t2.'Life expectancy',
+t3.country,t3.YEar ,t3.'Life expectancy',
+round((t2.country +3.'Life expectancy')/2,1)
+
+from  worldlifeexpectancy t1
+Join worldlifeexpectancy t2
+on t1.country=t2.country
+and t1.year=t2.year-1
+Join worldlifeexpectancy t3
+on t1.country=t3.country
+and t1.year=t3.year+1
+where t1.'Life expectancy'=" "
+
 
