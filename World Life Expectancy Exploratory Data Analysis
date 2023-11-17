@@ -1,0 +1,20 @@
+
+ FInd the MIn and MAx of each Country Life expenctancy and filter out the ones with zero.
+  SELECT country,
+MIN('Life expectancy'),
+MAX('Life expectancy')
+FROM worldlifeexpectancy
+group by country
+having MIN('Life expectancy') !=0
+and MAX('Life expectancy')!= 0
+order by country desc
+
+2. FInd the country that made the biggest strive 
+
+SELECT country,
+round(MAX('Life expectancy')-MIN('Life expectancy'),1) as LIfe_Increase_15years
+FROM worldlifeexpectancy
+group by country
+having MIN('Life expectancy') !=0
+and MAX('Life expectancy')!= 0
+order by country desc
