@@ -1,0 +1,26 @@
+1. FInd the sum of each state land and water and order  it by highest to the lowest.
+
+SELECT  state_name,sum(AWater),sum(ALand)
+FROM    ushouseholdincome
+group by state_name
+order by  desc;
+
+2, FInd the top 10 country  that have the highest  total amount of land and water and order water  by the greatest and lowest for Land.
+
+SELECT  state_name,sum(AWater),sum(ALand)
+FROM   ushouseholdincome
+group by state_name
+order by 2 desc
+limit 10;
+
+3.By State what is the top 5  Average Income and what is their Median Income , Order by highest 
+to Lowest.
+
+Select ue.State_Name,round(avg(Mean),1),round(avg(Median),1)
+from ushouseholdincome ue
+Inner  Join  ushouseholdincome_stastistics us
+on  ue.id=us.id 
+where Mean<> 0
+group by ue.state_name
+order by 2 desc
+limit 5;
