@@ -24,3 +24,40 @@ where Mean<> 0
 group by ue.state_name
 order by 2 desc
 limit 5;
+
+4. Show me the type and how many type area their is for each one.Also whats is  the avg salary and median  order by median higest to lowest .
+
+Select type,count(type),round(avg(Mean),1) ,round(avg(Median),1)
+from ushouseholdincome ue
+ Inner  Join  ushouseholdincome_stastistics us
+on  ue.id=us.id 
+where Mean<> 0
+group by 1
+order by 4 desc
+limit 20;
+
+
+5. Show only types of  area that are more than  100.
+
+Select type,count(type),round(avg(Mean),1) ,round(avg(Median),1)
+from   ushouseholdincome ue
+ Inner  Join  ushouseholdincome_stastistics us
+on  ue.id=us.id 
+where Mean<> 0
+group by 1
+having count(type) >100
+order by 4 desc
+limit 20;
+
+6. SHow me the average Median and average mean Salary  for city in the state of New Jersey 
+order by Round(avg(mean),1), Round(avg(median),1) from  Highest  to lowest amount.
+
+Select  ue.state_name,City,Round(avg(mean),1), Round(avg(median),1)
+from      ushouseholdincome ue
+Join   ushouseholdincome_stastistics us
+on ue.id=us.id
+where ue.State_name="New Jersey"
+group by  ue.state_name,City
+order by 3,4 desc;
+
+
