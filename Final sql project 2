@@ -1,0 +1,117 @@
+-- 1
+SELECT   staff.first_name as manager_first_name,
+staff.last_name as manager_last_name,
+address.address,
+address.district,
+city.city,
+country.country
+from store
+Left Join staff 
+on store.manager_staff_id=staff.staff_id
+Left Join  address
+on store.address_id=address.address_id
+Left Join city 
+ on  address.city_id=city.city_id
+ Left Join country
+ on city.country_id=country.country_id;
+ 
+ -- 2
+ Select 
+ Inv.store_id,
+ inv.inventory_id,
+ f.title,
+ f.rating,
+ f.rental_rate,
+ f.replacement_cost
+ from  Inventory Inv
+ Left Join film f
+ on inv.film_id=f.film_id;
+ 
+ -- 3 
+ 
+ Select 
+ Inv.store_id,
+ count(inv.inventory_id),
+ f.rating
+ from  Inventory Inv
+left   Join film f
+ on inv.film_id=f.film_id
+ group by inv.store_id,
+ f.rating;
+ 
+ -- 4
+ Select store_id,
+ category.name as category,
+ count(inventory.inventory_id) as film,
+ avg(replacement_cost) avg_fixing_Cost,
+ sum(replacement_cost) Total_fixing_cost
+ 
+ from inventory
+ Left Join  film 
+ on inventory.film_id=film.film_id
+ Left Join film_category
+ on film.film_id=film_category.film_id
+ Left Join category
+ on category.category_id=film_category.category_id
+ group by store_id,
+ category;
+ 
+ -- 5  
+ Select  cus.first_name,
+cus. last_name,
+cus.store_id,
+cus.active,
+ad.address,
+city.city,
+country.country
+
+ from customer cus
+ Left Join   address ad
+ on  cus.address_id=ad.address_id
+ LEft Join   city 
+  on city.city_id=ad.city_id
+  Left Join   country
+  on country. country_id=city.country_id;
+  
+  -- 6
+  select  cus.first_name,
+ cus. last_name,
+sum(pay.amount) as total_payed,
+count( rental_date) as total_rented
+  from  customer cus
+  Left Join  rental  ren
+  on cus.customer_id=ren.customer_id
+Left Join    payment  pay
+on ren.customer_id=pay.customer_id
+group by cus.first_name,
+ cus. last_name;
+ 
+ -- 7 
+ 
+Select"advisor" as tag, first_name,last_name,null
+from     advisor
+union 
+Select "investor" as tag, first_name,last_name,company_name
+from     investor;
+
+-- 8
+
+Select 
+Case 
+when actor_award.awards='Emmy,Oscar,Tony'  Then  '3 Awards'
+when actor_award.awards IN('Emmy,Oscar','Emmy, Tony','Oscar, Tony') Then '2 Awards'
+Else '1 Award'
+end  as number_of_awards,
+avg(case when actor_award.actor_id  IS  null then 0 else 1 end ) as pct_w_one_film
+ 
+ from actor_award
+ 
+ group by 
+Case 
+when actor_award.awards= 'Emmy,Oscar,Tony'  Then  '3 Awards'
+when actor_award.awards IN ('Emmy,Oscar','Emmy, Tony','Oscar, Tony') Then '2 Awards'
+Else '1 Award'
+end
+ 
+ 
+ 
