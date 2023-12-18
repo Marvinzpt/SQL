@@ -1,0 +1,75 @@
+
+-- For each year, return the 3 most popular girl names and 3 most popular boy names
+Select *
+from (with babies_by_year as(
+Select year,gender,name,sum(births) as num_babies
+from names
+group by year,gender,name)
+
+Select year,gender,name,num_babies,
+row_number() over(PARTITION BY year,gender order by num_babies desc) most_popular
+from babies_by_year) top_3
+where most_popular<4;
+
+ -- For each decade, return the 3 most popular girl names and 3 most popular boy names
+Select *
+from(with babies_by_decade as(
+Select (case when year between 1980 and  1989 then "Eighties" 
+             when year between 1990 and  1999 then"Ninethies"
+             when year between 2000 and 2009  then  "two_thousands" 
+             else"None"
+             end) as decade,
+gender,name,sum(births) as num_babies
+from names
+group by decade,gender,name)
+
+Select decade,gender,name,num_babies,
+row_number() over(PARTITION BY decade,gender order by num_babies desc) most_popular
+from babies_by_decade) as top_three
+where most_popular <4
+
+- Return the number of babies born in each of the six regions (NOTE: The state of MI should be in the Midwest region)
+Select distinct(region)
+from  regions;
+
+with clean_regions as ( 
+Select  state,
+Case when region ="New England" then "New_England" else  Region 
+end as clean_region 
+from regions
+Union 
+Select "MI" as state,"MIdwest" as region)
+
+Select  clean_region,sum(births) as num_birth
+from names n 
+Left Join clean_regions cr
+on n.state=cr.state
+group by clean_region;
+
+-- Return the 3 most popular girl names and 3 most popular boy names within each regio
+Select *
+	from (with baby_by_region as (
+	with clean_regions as ( 
+	Select  state,
+	Case when region ="New England" then "New_England" else  Region 
+	end as clean_region 
+	from regions
+	Union 
+	Select "MI" as state,"MIdwest" as region)
+
+	Select  cr.clean_region,
+	n.gender,
+	n.name,
+	SUM(n.Births) as num_babies
+	from names n 
+	Left Join clean_regions cr
+	on n.state=cr.state
+	group by cr.clean_region,n.gender,
+	n.name)
+
+	Select  clean_region, gender, name,
+	row_number () over (PARTITION BY clean_region ,gender order by num_babies desc) Popularity
+	from  baby_by_region) babies 
+    where Popularity<4
+
+
