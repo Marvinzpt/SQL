@@ -1,3 +1,46 @@
+--Find the overall most popular girl and boy names and show how they have changed in popularity rankings over the years
+Select  name, SUM(births) as num_births
+from     names
+where gender="F"
+group by  name
+order by num_births desc
+limit 1;
+-- Jessica
+
+Select  name, SUM(births) as num_births
+from     names
+where gender="M"
+group by  name
+order by num_births desc
+limit 1;
+-- Michael 
+
+select *
+from(
+With birth as(
+Select year,name,sum(births)  as num_births
+from names
+where gender="F"
+group by year,name)
+ Select year,name,
+	row_number() over (PARTITION BY year order by num_births desc )as Popularity 
+	from birth) as Pop
+    where name= "Jessica";
+
+select *
+from(
+With birth as(
+Select year,name,sum(births)  as num_births
+from names
+where gender="M"
+group by year,name)
+ Select year,name,
+	row_number() over (PARTITION BY year order by num_births desc )as Popularity 
+	from birth) as Pop
+    where name= "Michael"
+
+
+
 
 -- For each year, return the 3 most popular girl names and 3 most popular boy names
 Select *
